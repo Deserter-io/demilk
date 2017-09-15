@@ -7,4 +7,4 @@ $dotenv->load();
 
 define('HOME', __DIR__);
 define('DPUBLIC', HOME . '/public');
-define('STORAGE', DPUBLIC . '/storage');
+define('STORAGE', HOME . '/storage');
