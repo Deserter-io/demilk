@@ -50,16 +50,20 @@ class Demilk {
 
 
 		// Extract urls
-		$pattern = '%\<h2\>#\d+\</h2\>\s+\<p\>\<img src="([^\"]+)"[^\>]+\>\</p\>\s+\<p\>Image source\:.*\<a.+href="([^\"]+)"%';
+		$pattern = '%\<h2\>#\d+.*\</h2\>\s+\<p\>\<img src="([^\"]+)"[^\>]+\>\</p\>\s+\<p\>Image source\:.*\<a.+href="([^\"]+)"%';
 		
 		preg_match_all($pattern, $html, $matches);
 		
 		if( count($matches[1]) < 1) {
+			echo <<<EOFHTML
+<!DOCTYPE html><html lang=""><head>  <meta charset="utf-8"><title></title><meta name="description" content="" />  <meta name="keywords" content="" /><meta name="robots" content="" /></head><body>
+EOFHTML;
 			echo("Didn't find any images.\nMatches:\n");
 			print_r($matches);
-			echo "HTML:";
+			echo "\n\n<div>HTML: <textarea>";
 			print($html);
-			die("Didn't find any images.");
+			echo "</textarea></div></body></html>";
+			die();
 		} 
 		
 		foreach($matches[1] AS $i => $imgUrl) {
@@ -128,6 +132,13 @@ class Demilk {
 		
 		
 		rmdir( $folder);
+		
+		printf(
+			file_get_contents( HOME . '/routes/result.html')
+			, $i+1
+			, $_ENV['VK_ALBUM_OWNER_ID']
+			, $album->id
+		);
 	}
 
 
