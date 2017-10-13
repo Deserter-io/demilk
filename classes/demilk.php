@@ -50,7 +50,7 @@ class Demilk {
 
 
 		// Extract urls
-		$pattern = '%\<h2\>#\d+.*\</h2\>\s+\<p\>\<img src="([^\"]+)"[^\>]+\>\</p\>\s+\<p\>Image source\:.*\<a.+href="([^\"]+)"%';
+		$pattern = '%\<h2\>#\d+.*\</h2\>\s+\<p\>\<img[^\>]+src="([^\"]+)"[^\>]+\>\</p\>(\s+\<p\>Image source\:.*\<a.+href="([^\"]+)")?%';
 		
 		preg_match_all($pattern, $html, $matches);
 		
@@ -65,7 +65,7 @@ EOFHTML;
 			echo "</textarea></div></body></html>";
 			die();
 		} 
-		
+
 		foreach($matches[1] AS $i => $imgUrl) {
 			
 			$fileNameParts = explode('.', $imgUrl); 
